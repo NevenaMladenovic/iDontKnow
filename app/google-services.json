@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "179052034218-tj1vdb6m2nifdloa4s5clkj8u0lg1b04.apps.googleusercontent.com",
+          "client_id": "179052034218-e14na61in82m6velmq3fidb8857pj02o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.nevena.idontknow",
-            "certificate_hash": "ab1511feea397e517c24b62fd9ba0fdced1fc235"
+            "certificate_hash": "fae782e6338357700db7d6dd2f165802d8bae53b"
           }
         },
         {

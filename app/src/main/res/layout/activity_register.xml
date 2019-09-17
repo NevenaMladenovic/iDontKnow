@@ -8,27 +8,42 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
     android:fitsSystemWindows="true"
-    android:background="@drawable/bcg">
+    android:background="@drawable/bcg77">
 
     <ImageView
         android:id="@+id/register_img_logo"
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120sdp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:foregroundGravity="top"
         android:src="@drawable/logo"/>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/register_name"
-        android:layout_width="match_parent"
+        android:id="@+id/register_nickname"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_img_logo"
-        android:layout_margin="@dimen/_5sdp">
+        app:layout_constraintTop_toBottomOf="@id/register_img_logo">
+        <EditText
+            android:id="@+id/register_etxt_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_nickname"
+            android:inputType="text"
+            android:textAlignment="center" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/register_name"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/register_nickname">
         <EditText
             android:id="@+id/register_etxt_name"
             android:layout_width="match_parent"
@@ -41,12 +56,11 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/register_surname"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_name"
-        android:layout_margin="@dimen/_5sdp">
+        app:layout_constraintTop_toBottomOf="@id/register_name">
         <EditText
             android:id="@+id/register_etxt_surname"
             android:layout_width="match_parent"
@@ -59,12 +73,12 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/register_email"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/register_surname"
-        android:layout_margin="@dimen/_5sdp">
+        android:layout_margin="@dimen/_1sdp">
         <EditText
             android:id="@+id/register_etxt_email"
             android:layout_width="match_parent"
@@ -76,12 +90,11 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/register_password"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/register_email"
-        android:layout_margin="@dimen/_5sdp"
         app:passwordToggleEnabled="true">
         <EditText
             android:id="@+id/register_etxt_password"
@@ -94,12 +107,11 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/register_password_check"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/register_password"
-        android:layout_margin="@dimen/_5sdp"
         app:passwordToggleEnabled="true">
         <EditText
             android:id="@+id/register_etxt_password_check"
@@ -110,45 +122,25 @@
             android:textAlignment="center" />
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/register_number"
-        android:layout_width="match_parent"
+
+    <Button
+        android:id="@+id/register_btn_register"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/register_password_check"
-        android:layout_margin="@dimen/_5sdp">
-        <EditText
-            android:id="@+id/register_etxt_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/register_password_check"
-            android:layout_margin="@dimen/_5sdp"
-            android:hint="@string/hint_number"
-            android:inputType="phone"
-            android:textAlignment="center" />
-    </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/register_btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/register_number"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_25sdp"
         android:text="@string/btn_register"/>
 
     <Button
         android:id="@+id/register_btn_login"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/register_btn_register"
-        android:layout_margin="@dimen/_5sdp"
         android:text="@string/linkbtn_login"
         android:background="@null"
         android:textAllCaps="false"/>

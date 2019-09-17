@@ -1,14 +1,20 @@
 <resources>
-    <string name="app_name">iDontKnow</string>
+    <string name="app_name">MOSIS</string>
+
+    <!-- Firebase messages -->
+    <string name="auth_failed">Failed to Authenticate</string>
+    <string name="auth_success">Authentication Success</string>
 
     <!-- activity_login -->
     <string name="hint_email">Enter your e-mail address</string>
+    <string name="hint_nickname2">Enter your nickname</string>
     <string name="hint_password">Enter your password</string>
     <string name="btn_login">Login</string>
     <string name="btn_forgotPassword"> Forgot your password?</string>
     <string name="linkbtn_register"> Don\'t have an account? Create one!</string>
 
     <!-- activity_register -->
+    <string name="hint_nickname">Nickname</string>
     <string name="hint_name">Name</string>
     <string name="hint_surname">Surname</string>
     <string name="hint_newPassword">New password</string>
@@ -44,5 +50,15 @@
     <string name="go_to_settings">GOTO SETTINGS</string>
 
     <string name="failed_login">Failed login</string>
+
+    <!-- Bottom navigation bar titles -->
+    <string name="title_places">Places</string>
+    <string name="title_maps">Maps</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_rank">Rank</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="btn_review">Write a review</string>
 
 </resources>

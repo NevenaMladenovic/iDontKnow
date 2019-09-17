@@ -1,5 +1,6 @@
 package com.nevena.idontknow;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,15 +17,29 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import com.google.firebase.database.ValueEventListener;
+import com.nevena.idontknow.Models.*;
 
 
 public class RegisterActivity extends AppCompatActivity
 {
     private Button btnLogin, btnRegister;
+    private EditText inputName, inputSurname, inputNickname, inputEmail, inputPassword, inputPasswordCheck;
+    private String name, surname, nickname, userId, email, password, passwordCheck;
 
-    private EditText inputName, inputEmail, inputPassword, inputPasswordCheck;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth auth;
+    private FirebaseMethods firebaseMethods;
+    private FirebaseAuth.AuthStateListener authListener;
+    private Context mContext;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference myRef;
     private static final String TAG = "";
+    private String append = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,6 +47,11 @@ public class RegisterActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        mContext = RegisterActivity.this;
+
+        inputName = (EditText) findViewById(R.id.register_etxt_name);
+        inputSurname = (EditText) findViewById(R.id.register_etxt_surname);
+        inputNickname = (EditText) findViewById(R.id.register_etxt_nickname);
         inputEmail = (EditText) findViewById(R.id.register_etxt_email);
         inputPassword = (EditText) findViewById(R.id.register_etxt_password);
         inputPasswordCheck = (EditText) findViewById(R.id.register_etxt_password_check);
@@ -39,7 +59,8 @@ public class RegisterActivity extends AppCompatActivity
         btnLogin = (Button) findViewById(R.id.register_btn_login);
         btnRegister = (Button) findViewById(R.id.register_btn_register);
 
-        mAuth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
+        firebaseMethods = new FirebaseMethods(mContext);
 
         btnLogin.setOnClickListener(new View.OnClickListener()
         {
@@ -50,55 +71,122 @@ public class RegisterActivity extends AppCompatActivity
             }
         });
 
+
+        init();
+        setupFirebaseAuth();
+
+    }
+
+
+    private void init()
+    {
+
         btnRegister.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                String email = inputEmail.getText().toString();
-                String password = inputPassword.getText().toString();
-                String passwordCheck = inputPasswordCheck.getText().toString();
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Please enter your email address", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Please enter your password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (password.length() < 6) {
-                    Toast.makeText(getApplicationContext(), "Your password must contain at least 6 characters", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!TextUtils.equals(password, passwordCheck)) {
-                    Toast.makeText(getApplicationContext(), "Your passwords don't match.", Toast.LENGTH_SHORT).show();
-                    return;
+                name = inputName.getText().toString();
+                surname = inputSurname.getText().toString();
+                nickname = inputNickname.getText().toString();
+                email = inputEmail.getText().toString();
+                password = inputPassword.getText().toString();
+                passwordCheck = inputPasswordCheck.getText().toString();
+
+                //Check if all * fiels are filled
+                if (checkInputs(nickname, email, password, passwordCheck))
+                {
+                    firebaseMethods.registerNewEmail(email, password, "");
+
                 }
 
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>()
-                        {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task)
-                            {
-                                if (task.isSuccessful())
-                                {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d(TAG, "createUserWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(RegisterActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
             }
         });
+    }
 
+    private boolean checkInputs(String nickname, String email, String password, String passwordCheck){
+        Log.d(TAG, "checkInputs: checking inputs for null values.");
+        if (TextUtils.isEmpty(nickname))
+        {
+            Toast.makeText(mContext, "Please enter your nickname", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (TextUtils.isEmpty(email))
+        {
+            Toast.makeText(mContext, "Please enter your email address", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (TextUtils.isEmpty(password))
+        {
+            Toast.makeText(mContext, "Please enter your password", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (password.length() < 6)
+        {
+            Toast.makeText(mContext, "Your password must contain at least 6 characters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!TextUtils.equals(password, passwordCheck))
+        {
+            Toast.makeText(mContext, "Your passwords don't match.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+
+    private void setupFirebaseAuth()
+    {
+        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
+
+        auth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = firebaseDatabase.getReference();
+
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                if (user != null) {
+                    //If user is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Log.d(TAG, "onComplete: Successful signup");
+                            firebaseMethods.addNewUser(name, surname, nickname, email);
+                            Toast.makeText(mContext, "Successful signup!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    finish();
+
+                } else {
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (authListener != null) {
+            auth.removeAuthStateListener(authListener);
+        }
     }
 }
