@@ -1,0 +1,42 @@
+[{
+        "name": "Komuna Gastro Bar",
+        "image": "https://api.androidhive.info/json/movies/1.jpg",
+        "rate": 10.0,
+        "workingHours": "08:00 - 00:00",
+        "address": "Nikole Pašića 36, Niš"
+    },
+    {
+        "name": "Pivnica Nemir",
+        "image": "https://api.androidhive.info/json/movies/2.jpg",
+        "rate": 10.0,
+        "workingHours": "09:00 - 00:00",
+        "address": "Učitelj Tasina 17, Niš"
+    },
+    {
+        "name": "Kafeterija Niš",
+        "image": "https://api.androidhive.info/json/movies/3.jpg",
+        "rate": 8.0,
+        "workingHours": "07:00 - 23:00",
+        "address": "Nikole Pašića 45, Niš"
+    },
+    {
+        "name": "L'amour family",
+        "image": "https://api.androidhive.info/json/movies/4.jpg",
+        "rate": 8.4,
+        "workingHours": "08:00 - 00:00",
+        "address": "Obrenovićeva 27/3, Niš"
+    },
+    {
+        "name": "Fidel Gastro bar",
+        "image": "https://api.androidhive.info/json/movies/5.jpg",
+        "rate": 9.4,
+        "workingHours": "08:00 - 00:00",
+        "address": "Episkopska 11, Niš"
+    },
+    {
+        "name": "Pivnica Berta",
+        "image": "https://api.androidhive.info/json/movies/6.jpg",
+        "rate": 10.0,
+        "workingHours": "09:00 - 00:00",
+        "address": "Ulica Cara Dušana 73, Niš"
+    }]

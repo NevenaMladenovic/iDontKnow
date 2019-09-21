@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MOSIS</string>
+    <string name="app_name">iDontKnow</string>
 
     <!-- Firebase messages -->
     <string name="auth_failed">Failed to Authenticate</string>
@@ -60,5 +60,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="btn_review">Write a review</string>
+    <string name="txt_review">Write a review</string>
+    <string name="txt_rate">Rate this place:</string>
+    <string name="success_review">Please fill any empty fields.</string>
+    <string name="error_review">Your review is saved.</string>
+    <string name="txt_total_poens">Total poens:</string>
+    <string name="hint_poens">Total poens:</string>
+    <string name="btn_logout">logout</string>
+
 
 </resources>

@@ -10,18 +10,32 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.nevena.idontknow.Models.User;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,6 +50,16 @@ public class ProfileActivity extends AppCompatActivity
     private static final String TAG = ProfileActivity.class.getSimpleName();
     public static final int REQUEST_IMAGE = 100;
 
+    private EditText nickname, name, surname, email, poens;
+
+    private Button btn_save, btn_logout;
+    public String userID, userNickname;
+    private User updateUser, newUser;
+
+    private FirebaseAuth auth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference myRef;
+
     @BindView(R.id.profile_img_profile)
     ImageView imgProfile;
 
@@ -48,7 +72,19 @@ public class ProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
-        imgPlus = (ImageView) findViewById(R.id.img_plus);
+        auth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = firebaseDatabase.getReference();
+
+
+        FirebaseUser user = auth.getCurrentUser();
+        userID = user.getUid();
+
+
+        initLayout();
+        initListeners();
+
+
 
         // Clearing older images from cache directory
         // don't call this line if you want to choose multiple images in the same activity
@@ -63,6 +99,132 @@ public class ProfileActivity extends AppCompatActivity
         {
             loadProfileDefault();
         }
+
+
+        findUser();
+
+    }
+
+    public void findUser()
+    {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        DatabaseReference Ref = reference.child(auth.getUid());
+//        Query query = reference
+////                .child("users")
+////                .orderByChild("userID")
+////                .equalTo(userID);
+
+        Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                //subjectID = singleSnapshot.getKey();
+                setUserData(user);
+//                for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+//                    User user = singleSnapshot.getValue(User.class);
+//                    //subjectID = singleSnapshot.getKey();
+//                    setUserData(user);
+//                }
+//                if (!dataSnapshot.exists()){
+//                  //  Toast.makeText(ProfileActivity.this, "Ne postoji user sa ovim imenom!", Toast.LENGTH_SHORT).show();
+//                    finish();
+//                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void setUserData(User user){
+        updateUser = user;
+        nickname.setText(user.getNickname());
+        name.setText(user.getName());
+        surname.setText(user.getSurname());
+        email.setText(user.getEmail());
+        poens.setText(user.getPoens().toString());
+    }
+
+    private void initLayout()
+    {
+        imgPlus = (ImageView) findViewById(R.id.img_plus);
+
+        nickname = findViewById(R.id.profile_etxt_nickname);
+        name = findViewById(R.id.profile_etxt_name);
+        surname = findViewById(R.id.profile_etxt_surname);
+        email = findViewById(R.id.profile_etxt_email);
+        poens = findViewById(R.id.profile_etxt_poens);
+
+        btn_save = findViewById(R.id.profile_btn_save);
+        btn_logout = findViewById(R.id.profile_btn_logout);
+
+    }
+
+    private void initListeners()
+    {
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String newNickname = nickname.getText().toString();
+                String newName = name.getText().toString();
+                String newSurname = surname.getText().toString();
+                String newEmail = email.getText().toString();
+
+                if(!updateUser.getNickname().equals(newNickname)){
+
+                    myRef.child("users")
+                            .child(userID)
+                            .child("nickname")
+                            .setValue(newNickname);
+
+                }
+
+                if(!updateUser.getName().equals(newName)){
+
+                    myRef.child("users")
+                            .child(userID)
+                            .child("name")
+                            .setValue(newName);
+                }
+
+                if(!updateUser.getSurname().equals(newSurname)){
+
+                    myRef.child("users")
+                           // .child("nena")
+                            .child(userID)
+                            .child("surname")
+                            .setValue(newSurname);
+                }
+
+                if(!updateUser.getEmail().equals(newEmail)){
+
+                    myRef.child("users")
+                        //    .child("nena")
+                            .child(userID)
+                            .child("email")
+                            .setValue(newEmail);
+                }
+
+                newUser = new User(newName, newNickname, newNickname, newEmail, userID);
+
+
+                finish();
+            }
+        });
+
+
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                auth.signOut();
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void loadProfile(String url) {
@@ -71,12 +233,13 @@ public class ProfileActivity extends AppCompatActivity
         GlideApp.with(this).load(url)
                 .into(imgProfile);
         imgProfile.setColorFilter(ContextCompat.getColor(this, android.R.color.transparent));
-    }
+        imgPlus.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));    }
 
     private void loadProfileDefault() {
         GlideApp.with(this).load(R.drawable.ic_avatar)
                 .into(imgProfile);
         imgProfile.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        imgPlus.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
     }
 
     @OnClick({R.id.img_plus, R.id.profile_img_profile})

@@ -4,6 +4,7 @@ public class User
 {
     private String name, surname, nickname;
     private String email, userID;
+    private Integer poens;
 
     //private int rang;
 
@@ -13,16 +14,7 @@ public class User
         this.surname="";
         this.nickname="";
         this.email="";
-
-    }
-
-    public User(String name, String surname, String nickname, String email)
-    {
-        this.name = name;
-        this.surname=surname;
-        this.nickname=nickname;
-        this.email = email;
-
+        this.poens=0;
     }
 
     public User(String name, String surname, String nickname, String email, String userID)
@@ -32,7 +24,7 @@ public class User
         this.nickname=nickname;
         this.email = email;
         this.userID = userID;
-
+        this.poens = 0;
     }
 
     public User(User u)
@@ -41,6 +33,8 @@ public class User
         this.surname= u.getSurname();
         this.nickname= u.getNickname();
         this.email = u.getEmail();
+        this.poens = u.getPoens();
+
     }
 
     public String getUserID() { return userID; }
@@ -58,5 +52,7 @@ public class User
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email;}
 
+    public Integer getPoens() { return poens; }
+    public void setPoens(Integer poens) { this.poens = poens;}
 
 }

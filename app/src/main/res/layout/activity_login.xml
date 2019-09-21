@@ -36,7 +36,7 @@
                 android:id="@+id/login_etxt_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:hint="@string/hint_nickname2"
                 android:textAlignment="center"/>
         </android.support.design.widget.TextInputLayout>
@@ -108,7 +108,8 @@
         android:id="@+id/loadingHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/loading_img">
+        android:background="@drawable/loading_img"
+        android:visibility="gone">
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/indicator"

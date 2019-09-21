@@ -66,56 +66,48 @@ public class LoginActivity extends AppCompatActivity {
     View loadingHolder;
     AVLoadingIndicatorView avi;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        initLayout();
-        initListeners();
-
-        avi.show();
-
-        mContext = LoginActivity.this;
         auth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        myRef = firebaseDatabase.getReference("users");
+        mContext = LoginActivity.this;
         firebaseMethods = new FirebaseMethods(mContext);
 
 
         currentUserID = "";
         isUserLoggedIn = false;
-
-
-        auth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = firebaseDatabase.getReference();
-
-        //check the current user
-        if (auth.getCurrentUser() != null)
+        new CountDownTimer(3000,100)
         {
-            userID = auth.getCurrentUser().getUid();
-            isUserLoggedIn = true;
-            checkUser(auth.getCurrentUser().getUid());
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
-        else
-        {
-            new CountDownTimer(3000,100)
+
+            @Override
+            public void onTick(long l) {   }
+
+            @Override
+            public void onFinish()
             {
-
-                @Override
-                public void onTick(long l) {   }
-
-                @Override
-                public void onFinish()
+                if (auth.getCurrentUser() != null)
                 {
-                    loadingHolder.setVisibility(View.GONE);
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+//            userID = auth.getCurrentUser().getUid();
+//            isUserLoggedIn = true;
+//            checkUser(auth.getCurrentUser().getUid());
+                    //   startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    //   finish();
                 }
-            }.start();
+                else
+                    loadingHolder.setVisibility(View.GONE);
+            }
+        }.start();
 
-        }
+        initLayout();
+        initListeners();
+
+        avi.show();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -123,14 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
         setupFirebaseAuth();
-
-
-
-
-
-
 //        // Check if email or password are empty
 //        btnLogin.setOnClickListener(new View.OnClickListener()
 //        {
@@ -175,10 +160,6 @@ public class LoginActivity extends AppCompatActivity {
 //                        });
 //            }
 //        });
-
-
-
-
     }
 
     private void initLayout()
@@ -217,62 +198,63 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String nickname = inputNickname.getText().toString();
-//              //  email += "@gmail.com";
                 final String password = inputPassword.getText().toString();
 
                 if(checkInputs(nickname, password))
                 {
-                    //Query mQueryRef =  myRef.child(String.format("users/"+nickname+"/email"));
-                    Query mQueryRef =  myRef.child("users").child(nickname);
-                    // myRef.child("users").child(nickname)
-                    mQueryRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if(dataSnapshot!=null){
-                                User u =  dataSnapshot.getValue(User.class);
-                                String email = u.getEmail();
-
-                                auth.signInWithEmailAndPassword(email, password)
-                                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                                FirebaseUser user = auth.getCurrentUser();
-
-                                                if (!task.isSuccessful()) {
-                                                    Toast.makeText(LoginActivity.this, getString(R.string.auth_failed),
-                                                            Toast.LENGTH_SHORT).show();
-                                                }
-                                                else{
-                                                    try{
-                                                        if(user.isEmailVerified()){
-                                                            Log.d(TAG, "onComplete: success. email is verified.");
-                                                            checkUser(user.getUid());
-                                                            // checkUser(nickname);
-
-                                                        }else{
-                                                            Toast.makeText(mContext, "Email is not verified \ncheck your email inbox.", Toast.LENGTH_SHORT).show();
-                                                            auth.signOut();
-                                                        }
-
-                                                    }catch (NullPointerException e){
-                                                        Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
-                                                    }
-                                                }
-                                            }
-                                        });
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-
-                    });
-
-
+//                    DatabaseReference databaseReference = myRef.child(auth.getUid());
+//                    Query mQueryRef =  myRef.child("users").orderByChild("nickname").equalTo(nickname);
+//                    mQueryRef.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            if(dataSnapshot!=null){
+////                                for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+////                                    User u = childSnapshot.getValue(User.class);
+////                                    String email = u.getEmail();
+////
+////                                }
+//                                User u =  new User();
+//                                u.setEmail(dataSnapshot.getValue(User.class).getEmail());
+//                                String email = u.getEmail();
+//
+//                                auth.signInWithEmailAndPassword(email, password)
+//                                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<AuthResult> task) {
+//
+//                                                FirebaseUser user = auth.getCurrentUser();
+//
+//                                                if (!task.isSuccessful()) {
+//                                                    Toast.makeText(LoginActivity.this, getString(R.string.auth_failed),
+//                                                            Toast.LENGTH_SHORT).show();
+//                                                }
+//                                                else{
+//                                                    try{
+//                                                        if(user.isEmailVerified()){
+//                                                            Log.d(TAG, "onComplete: success. email is verified.");
+//                                                            checkUser(user.getUid());
+//                                                            // checkUser(nickname);
+//
+//                                                        }else{
+//                                                            Toast.makeText(mContext, "Email is not verified \ncheck your email inbox.", Toast.LENGTH_SHORT).show();
+//                                                            auth.signOut();
+//                                                        }
+//
+//                                                    }catch (NullPointerException e){
+//                                                        Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
+//                                                    }
+//                                                }
+//                                            }
+//                                        });
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                        }
+//
+//                    });
 //                    auth.signInWithEmailAndPassword(nickname, password)
 //                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
 //                                @Override
@@ -300,8 +282,36 @@ public class LoginActivity extends AppCompatActivity {
 //                                    }
 //                                }
 //                            });
-                }
+                    auth.signInWithEmailAndPassword(nickname, password)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
 
+                                    FirebaseUser user = auth.getCurrentUser();
+
+                                    if (!task.isSuccessful()) {
+                                        Toast.makeText(LoginActivity.this, getString(R.string.auth_failed),
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        try{
+                                            if(user!= null && user.isEmailVerified()){
+                                                Log.d(TAG, "onComplete: success. email is verified.");
+                                                checkUser(user.getUid());
+                                                // checkUser(nickname);
+
+                                            }else{
+                                                Toast.makeText(mContext, "Email is not verified \ncheck your email inbox.", Toast.LENGTH_SHORT).show();
+                                                auth.signOut();
+                                            }
+
+                                        }catch (NullPointerException e){
+                                            Log.e(TAG, "onComplete: NullPointerException: " + e.getMessage() );
+                                        }
+                                    }
+                                }
+                            });
+                }
             }
         });
     }

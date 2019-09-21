@@ -11,22 +11,22 @@
 
     <RelativeLayout
         android:id="@+id/profile_img"
-        android:layout_width="@dimen/_160sdp"
+        android:layout_width="@dimen/_140sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
+
         <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profile_img_profile"
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="@dimen/_150sdp"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_140sdp"
+            android:layout_marginTop="@dimen/_15sdp"
             android:src="@drawable/ic_avatar"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/_15sdp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/img_plus"
@@ -41,6 +41,31 @@
             />
     </RelativeLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/profile_nickname"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_img"
+        android:layout_marginTop="@dimen/_20sdp">
+        <EditText
+            android:id="@+id/profile_etxt_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_3sdp"
+            android:hint="@string/hint_nickname"
+            android:inputType="text"
+            android:textAlignment="center" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/profile_name"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_nickname">
     <EditText
         android:id="@+id/profile_etxt_name"
         android:layout_width="match_parent"
@@ -48,11 +73,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_img"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_margin="@dimen/_3sdp"
         android:hint="@string/hint_name"
         android:inputType="text"
         android:textAlignment="center" />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/profile_surname"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_name">
     <EditText
         android:id="@+id/profile_etxt_surname"
         android:layout_width="match_parent"
@@ -60,11 +93,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_etxt_name"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_margin="@dimen/_3sdp"
         android:hint="@string/hint_surname"
         android:inputType="text"
         android:textAlignment="center" />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/profile_email"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_surname"
+        android:layout_margin="@dimen/_1sdp">
     <EditText
         android:id="@+id/profile_etxt_email"
         android:layout_width="match_parent"
@@ -72,44 +114,55 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_etxt_surname"
-        android:layout_margin="@dimen/_8sdp"
+        android:layout_margin="@dimen/_3sdp"
         android:hint="@string/hint_email"
         android:inputType="textEmailAddress"
         android:textAlignment="center" />
+    </android.support.design.widget.TextInputLayout>
 
-
-    <EditText
-        android:id="@+id/profile_etxt_birthday"
-        android:layout_width="match_parent"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/profile_poens"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_etxt_email"
-        android:layout_margin="@dimen/_8sdp"
-        android:inputType="date"
-        android:textAlignment="center" />
+        app:layout_constraintTop_toBottomOf="@id/profile_email"
+        android:layout_margin="@dimen/_1sdp">
+        <EditText
+            android:id="@+id/profile_etxt_poens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_email"
+            android:layout_margin="@dimen/_3sdp"
+            android:hint="@string/hint_poens"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:focusable= "false" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/profile_etxt_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_etxt_birthday"
-        android:layout_margin="@dimen/_8sdp"
-        android:hint="@string/hint_number"
-        android:inputType="phone"
-        android:textAlignment="center" />
 
     <Button
         android:id="@+id/profile_btn_save"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_150sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_etxt_number"
-        android:layout_margin="@dimen/_20sdp"
+        app:layout_constraintTop_toBottomOf="@id/profile_poens"
+        android:layout_marginTop="@dimen/_20sdp"
         android:text="@string/btn_save"/>
+
+    <Button
+        android:id="@+id/profile_btn_logout"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_btn_save"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/btn_logout"
+        android:background="@color/colorAccent"/>
 
 
 

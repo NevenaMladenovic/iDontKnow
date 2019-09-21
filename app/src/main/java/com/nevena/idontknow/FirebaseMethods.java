@@ -84,8 +84,8 @@ public class FirebaseMethods {
         User user = new User(name, surname, nickname, email, userID);
 
         myRef.child("users")
-//                .child(userID)
-                .child(nickname)
+                .child(userID)
+        //        .child(nickname)
                 .setValue(user);
         //  .setValue(email);
 

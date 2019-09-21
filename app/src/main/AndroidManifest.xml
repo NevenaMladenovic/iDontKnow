@@ -16,10 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".PlaceActivity"></activity>
         <activity
             android:name=".ImagePickerActivity"
             android:label="@string/title_activity_image_picker"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
