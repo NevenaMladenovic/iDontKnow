@@ -102,7 +102,8 @@ public class PlacesFragment extends Fragment
         //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(8), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setNestedScrollingEnabled(false);
+//        recyclerView.setNestedScrollingEnabled(false);
+
 
 
         //fetchStoreItems();
@@ -187,6 +188,7 @@ public class PlacesFragment extends Fragment
                 public void onFinish()
                 {
                     avi.hide();
+                    recyclerView.setVerticalScrollbarPosition(placesList.size() - 2);
                 }
             }.start();
         }

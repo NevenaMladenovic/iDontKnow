@@ -2,6 +2,7 @@ package com.nevena.idontknow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nevena.idontknow.Models.User;
+import com.nevena.idontknow.newActivity.PlacesListActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -91,12 +93,12 @@ public class LoginActivity extends AppCompatActivity {
             {
                 if (auth.getCurrentUser() != null)
                 {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, PlacesListActivity.class));
                     finish();
 //            userID = auth.getCurrentUser().getUid();
 //            isUserLoggedIn = true;
 //            checkUser(auth.getCurrentUser().getUid());
-                    //   startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    //   startActivity(new Intent(LoginActivity.this, NewProfileActivity.class));
                     //   finish();
                 }
                 else
@@ -149,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                if (task.isSuccessful())
 //                                {
 //                                    Log.d(TAG, "signInWithEmail:success");
-//                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                    Intent intent = new Intent(LoginActivity.this, NewProfileActivity.class);
 //                                    startActivity(intent);
 //                                    finish();
 //                                } else {
@@ -282,6 +284,7 @@ public class LoginActivity extends AppCompatActivity {
 //                                    }
 //                                }
 //                            });
+
                     auth.signInWithEmailAndPassword(nickname, password)
                             .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -334,13 +337,16 @@ public class LoginActivity extends AppCompatActivity {
                     user.setUserID(objectMap.get("userID").toString());
                     currentUserID = user.getUserID();
                     if(!currentUserID.isEmpty()) {
-                        if(isUserLoggedIn) {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                        if(isUserLoggedIn) {
+                        if(readSP())
+                        {    writeSp(false);}
+
+                            startActivity(new Intent(LoginActivity.this, PlacesListActivity.class));
                             finish();
-                        }else{
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
-                        }
+//                        }else{
+//                            startActivity(new Intent(LoginActivity.this, PlacesListActivity.class));
+//                            finish();
+//                        }
                     }
                 }
             }
@@ -351,6 +357,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private Boolean readSP()
+    {
+        SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "FirstLogin", MODE_PRIVATE);
+        Boolean isFirstLogin = sharedPreferencesA.getBoolean("IsFirstLogin", true);
+
+        return isFirstLogin;
+    }
+
+    private void writeSp(Boolean val)
+    {
+        SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "FirstLogin", MODE_PRIVATE);
+        SharedPreferences.Editor editorA = sharedPreferencesA.edit();
+        editorA.putBoolean("IsFirstLogin", val); //key, value
+        editorA.apply();
     }
 
     private boolean checkInputs(String email, String password){
@@ -461,7 +483,7 @@ public class LoginActivity extends AppCompatActivity {
                             {
                                 isUserLoggedIn = true;
                                 checkUser(auth.getCurrentUser().getUid());
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                startActivity(new Intent(LoginActivity.this, PlacesListActivity.class));
                                 finish();
                             }
 

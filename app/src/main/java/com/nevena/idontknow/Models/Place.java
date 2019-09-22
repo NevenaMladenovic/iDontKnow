@@ -4,15 +4,17 @@ public class Place
 {
 
     private String name;
+    private String type;
     private String thumbnailUrl;
     private String address;
     private String workingHours;
     private double rate;
     private String placetID;
 
-
     private double latitude;
     private double longitude;
+
+    private Review review;
 
     public Place()
     {
@@ -23,18 +25,20 @@ public class Place
 //        this.rate = 0;
     }
 
-    public Place(String name, String thumbnailUrl, String address, String workingHours, double rate)
+    public Place(String name, String type, String thumbnailUrl, String address, String workingHours, double rate)
     {
         this.name = name;
+        this.type = type;
         this.thumbnailUrl = thumbnailUrl;
         this.address = address;
         this.workingHours = workingHours;
         this.rate = rate;
     }
 
-    public Place(String name, String thumbnailUrl, String address, String workingHours, double rate, double latitude, double longitude)
+    public Place(String name, String type, String thumbnailUrl, String address, String workingHours, double rate, double latitude, double longitude)
     {
         this.name = name;
+        this.type = type;
         this.thumbnailUrl = thumbnailUrl;
         this.address = address;
         this.workingHours = workingHours;
@@ -46,6 +50,7 @@ public class Place
     public Place(Place place)
     {
         this.name = place.name;
+        this.type = place.type;
         this.thumbnailUrl = place.thumbnailUrl;
         this.address = place.address;
         this.workingHours = place.workingHours;
@@ -65,6 +70,14 @@ public class Place
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getThumbnailUrl()
@@ -121,5 +134,13 @@ public class Place
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 }

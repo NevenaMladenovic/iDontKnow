@@ -41,7 +41,6 @@ dependencies {
     implementation "com.android.support:design:28.0.0"
 
 
-
     //Google services
     //implementation 'com.google.android.gms:play-services-maps:15.0.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
@@ -89,4 +88,8 @@ dependencies {
     // It can also be used to convert a JSON string to an equivalent Java object.
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    //OpenStreetMap
+    implementation 'org.osmdroid:osmdroid-android:6.1.0'
+    implementation 'org.osmdroid:osmdroid-wms:6.1.0'
+    implementation 'org.osmdroid:osmdroid-mapsforge:6.1.0'
 }

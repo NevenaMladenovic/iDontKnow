@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.nevena.idontknow.Models.Place;
 import com.nevena.idontknow.Models.User;
 
 
@@ -89,6 +90,26 @@ public class FirebaseMethods {
                 .setValue(user);
         //  .setValue(email);
 
+    }
+
+
+    public void addNewPlace (String name, String type, String thumbnailUrl, String address, String workingHours, double rate, double latitude, double longitude) {
+
+        Place place = new Place(name, type, thumbnailUrl, address, workingHours, rate, latitude, longitude);
+
+        myRef.child("places")
+                .child(name)
+                .setValue(place);
+    }
+
+    public void addNewPlace (Place p) {
+
+        //String id = myRef.push().getKey();
+        Place place = new Place(p);
+
+        myRef.child("places")
+                .child(place.getName())
+                .setValue(place);
     }
 
 }

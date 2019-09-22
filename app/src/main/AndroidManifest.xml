@@ -4,9 +4,12 @@
     package="com.nevena.idontknow">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +19,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".PlaceActivity"></activity>
+        <activity android:name=".newActivity.RankActivity"></activity>
+        <activity android:name=".newActivity.FriendsActivity" />
+        <activity
+            android:name=".newActivity.MapsActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+        <activity
+            android:name=".newActivity.PlacesListActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+        <activity
+            android:name=".PlaceActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
         <activity
             android:name=".ImagePickerActivity"
             android:label="@string/title_activity_image_picker"
@@ -26,20 +39,21 @@
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
-        <activity android:name=".ProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen"/>
-        <activity android:name=".RegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen"/>
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+        <activity
+            android:name=".RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+        <activity
+            android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- cache directory file provider paths -->
+        </activity> <!-- cache directory file provider paths -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.nevena.idontknow.provider"

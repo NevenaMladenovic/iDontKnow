@@ -10,11 +10,11 @@ public class User
 
     public User()
     {
-        this.name="";
-        this.surname="";
-        this.nickname="";
-        this.email="";
-        this.poens=0;
+//        this.name="";
+//        this.surname="";
+//        this.nickname="";
+//        this.email="";
+//        this.poens=0;
     }
 
     public User(String name, String surname, String nickname, String email, String userID)
@@ -33,7 +33,7 @@ public class User
         this.surname= u.getSurname();
         this.nickname= u.getNickname();
         this.email = u.getEmail();
-        this.poens = u.getPoens();
+        this.poens = Integer.valueOf(u.getPoens());
 
     }
 
@@ -52,7 +52,7 @@ public class User
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email;}
 
-    public Integer getPoens() { return poens; }
+    public String getPoens() { return String.valueOf(poens); }
     public void setPoens(Integer poens) { this.poens = poens;}
 
 }
