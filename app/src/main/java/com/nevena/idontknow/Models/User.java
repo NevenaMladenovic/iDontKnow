@@ -4,7 +4,7 @@ public class User
 {
     private String name, surname, nickname;
     private String email, userID;
-    private Integer poens;
+    private int poens;
 
     //private int rang;
 
@@ -33,7 +33,7 @@ public class User
         this.surname= u.getSurname();
         this.nickname= u.getNickname();
         this.email = u.getEmail();
-        this.poens = Integer.valueOf(u.getPoens());
+        this.poens = u.getPoens();
 
     }
 
@@ -52,7 +52,7 @@ public class User
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email;}
 
-    public String getPoens() { return String.valueOf(poens); }
-    public void setPoens(Integer poens) { this.poens = poens;}
+    public int getPoens() { return poens; }
+    public void setPoens(int poens) { this.poens = poens;}
 
 }

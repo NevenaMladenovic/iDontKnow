@@ -137,7 +137,7 @@
             app:layout_constraintTop_toBottomOf="@id/profile_email"
             android:layout_margin="@dimen/_3sdp"
             android:hint="@string/hint_poens"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:textAlignment="center"
             android:focusable= "false" />
     </android.support.design.widget.TextInputLayout>

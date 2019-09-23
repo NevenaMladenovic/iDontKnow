@@ -117,34 +117,6 @@ public class PlacesListActivity extends AppCompatActivity {
 
         //setupFirebaseData();
 
-//        Dexter.withActivity(this)
-//                .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-//                .withListener(new MultiplePermissionsListener() {
-//                    @Override
-//                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-//
-//                        Context ctx = getApplicationContext();
-//                        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-//
-//                        map = (MapView) findViewById(R.id.mapview);
-//                        // Inflate the layout for this fragment
-//
-//                        map.setTileSource(TileSourceFactory.MAPNIK);
-//
-////                        map.setBuiltInZoomControls(true);
-//                        map.setMultiTouchControls(true);
-//
-//                        IMapController mapController = map.getController();
-//                        mapController.setZoom(17.5);
-//                        GeoPoint startPoint = new GeoPoint(43.32472, 21.90333);
-//                        mapController.setCenter(startPoint);
-//                    }
-//
-//                    @Override
-//                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-//                        token.continuePermissionRequest();
-//                    }
-//                }).check();
     }
 
     public void getPlacesList()

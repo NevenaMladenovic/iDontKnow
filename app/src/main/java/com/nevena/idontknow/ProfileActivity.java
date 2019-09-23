@@ -145,6 +145,7 @@ public class ProfileActivity extends AppCompatActivity
         surname.setText(user.getSurname());
         email.setText(user.getEmail());
         poens.setText(String.valueOf(user.getPoens()));
+
     }
 
     private void initLayout()
@@ -192,7 +193,6 @@ public class ProfileActivity extends AppCompatActivity
                 if(!updateUser.getSurname().equals(newSurname)){
 
                     myRef.child("users")
-                           // .child("nena")
                             .child(userID)
                             .child("surname")
                             .setValue(newSurname);
@@ -201,7 +201,6 @@ public class ProfileActivity extends AppCompatActivity
                 if(!updateUser.getEmail().equals(newEmail)){
 
                     myRef.child("users")
-                        //    .child("nena")
                             .child(userID)
                             .child("email")
                             .setValue(newEmail);

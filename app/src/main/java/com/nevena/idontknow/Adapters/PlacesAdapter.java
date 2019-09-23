@@ -10,7 +10,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.nevena.idontknow.GlideApp;
 import com.nevena.idontknow.MainActivity;
 import com.nevena.idontknow.Models.Place;
 import com.nevena.idontknow.PlaceActivity;
@@ -27,7 +31,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.MyViewHold
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
         public TextView name, rate, workingHours, address;
-        public ImageView thumbnail;
+        public NetworkImageView thumbnail;
         public RelativeLayout rootView;
 
         public MyViewHolder(View view)
@@ -37,7 +41,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.MyViewHold
             rate = (TextView) view.findViewById(R.id.rate);
             workingHours = (TextView) view.findViewById(R.id.workingHours);
             address = (TextView) view.findViewById(R.id.address);
-            thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
+            thumbnail = view.findViewById(R.id.thumbnail);
             rootView =  view.findViewById(R.id.rootview);
 
         }
@@ -79,9 +83,22 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.MyViewHold
         });
 
         //TODO slike se ne ucitavaju
-        Glide.with(context)
+
+        GlideApp.with(context)
                 .load(place.getThumbnailUrl())
+                .placeholder(R.drawable.logo)
+        //        .dontAnimate()
+                .thumbnail(0.25f)
                 .into(holder.thumbnail);
+
+        // Reference to an image file in Cloud Storage
+      //  StorageReference storageReference = FirebaseStorage.getInstance().getReference("logos");
+
+        // Download directly from StorageReference using Glide
+        // (See MyAppGlideModule for Loader registration)
+//        Glide.with(context)
+//                .load(storageReference)
+//                .into(holder.thumbnail);
     }
 
     @Override

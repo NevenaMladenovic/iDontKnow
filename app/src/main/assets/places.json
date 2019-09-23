@@ -1,7 +1,7 @@
 [{
         "name": "Komuna Gastro Bar",
         "type": "gastro bar",
-        "image": "https://api.androidhive.info/json/movies/1.jpg",
+        "image": "https://firebasestorage.googleapis.com/v0/b/idontknow-bce70.appspot.com/o/logos%2Fkomuna.jpg?alt=media&token=1bd90791-0b65-4181-af05-51b7c6088095",
         "rate": 0.0,
         "workingHours": "08:00 - 00:00",
         "address": "Nikole Pašića 36, Niš",
@@ -11,7 +11,7 @@
     {
         "name": "Pivnica Nemir",
         "type": "pivnica",
-        "image": "https://api.androidhive.info/json/movies/2.jpg",
+        "image": "https://firebasestorage.googleapis.com/v0/b/idontknow-bce70.appspot.com/o/logos%2Fnemir.jpg?alt=media&token=fb527ffe-3028-4da9-a334-f09fe5de3cba",
         "rate": 0.0,
         "workingHours": "09:00 - 00:00",
         "address": "Učitelj Tasina 17, Niš",
@@ -21,7 +21,7 @@
     {
         "name": "Kafeterija Niš",
         "type": "kafe-poslastičara",
-        "image": "https://api.androidhive.info/json/movies/3.jpg",
+        "image": "https://firebasestorage.googleapis.com/v0/b/idontknow-bce70.appspot.com/o/logos%2Fkafeterijanis.jpg?alt=media&token=166e3003-59a2-4c0a-a8be-daf77de92135",
         "rate": 0.0,
         "workingHours": "07:00 - 23:00",
         "address": "Nikole Pašića 45, Niš",
@@ -31,7 +31,7 @@
     {
         "name": "L'amour family",
         "type": "kafe-poslastičara",
-        "image": "https://api.androidhive.info/json/movies/4.jpg",
+        "image": "https://firebasestorage.googleapis.com/v0/b/idontknow-bce70.appspot.com/o/logos%2Flamour.jpg?alt=media&token=565ff77d-ce62-4c31-9ffe-29cd9af55b6b",
         "rate": 0.0,
         "workingHours": "08:00 - 00:00",
         "address": "Obrenovićeva 27/3, Niš",
@@ -41,7 +41,7 @@
     {
         "name": "Fidel Gastro bar",
         "type": "gastro bar",
-        "image": "https://api.androidhive.info/json/movies/5.jpg",
+        "image": "https://firebasestorage.googleapis.com/v0/b/idontknow-bce70.appspot.com/o/logos%2Ffidelgastro.jpg?alt=media&token=dc5629fe-9172-48f0-a5d2-29866f27043f",
         "rate": 0.0,
         "workingHours": "08:00 - 00:00",
         "address": "Episkopska 11, Niš",
@@ -51,7 +51,7 @@
     {
         "name": "Pivnica Berta",
         "type": "pivnica",
-        "image": "https://api.androidhive.info/json/movies/6.jpg",
+        "image": "https://firebasestorage.googleapis.com/v0/b/idontknow-bce70.appspot.com/o/logos%2Fberta.jpg?alt=media&token=1697a5dd-baec-4a4a-bc8c-da884b42052f",
         "rate": 0.0,
         "workingHours": "09:00 - 00:00",
         "address": "Ulica Cara Dušana 73, Niš",
