@@ -1,7 +1,5 @@
 package com.nevena.idontknow.Adapters;
 
-import com.bumptech.glide.request.RequestOptions;
-import com.nevena.idontknow.GlideApp;
 import com.nevena.idontknow.R;
 import com.nevena.idontknow.Controllers.AppController;
 import com.nevena.idontknow.Models.Place;
@@ -59,7 +57,7 @@ public class CustomListAdapter extends BaseAdapter
             inflater = (LayoutInflater) activity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.list_row, null);
+            convertView = inflater.inflate(R.layout.place_list_row, null);
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();

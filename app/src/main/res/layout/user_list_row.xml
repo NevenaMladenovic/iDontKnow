@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_100sdp">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rootview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp">
+
+        <!-- number -->
+        <TextView
+            android:id="@+id/num"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/num"
+            android:textStyle="bold"
+            android:text="1"
+            android:textAlignment="center"
+            android:gravity="center_vertical"/>
+
+        <!-- Thumbnail User Image -->
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_toRightOf="@+id/num"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="@dimen/_8sdp"
+            />
+
+        <!-- User nickname -->
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/thumbnail"
+            android:layout_toRightOf="@+id/num"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:textSize="@dimen/name"
+            android:textStyle="bold"
+            android:text="nickname"/>
+
+        <!-- Total poens lbl: -->
+        <TextView
+            android:id="@+id/lbl_poens"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/thumbnail"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:layout_marginTop="10dip"
+            android:textSize="@dimen/stars"
+            android:text="@string/total_poens"
+            android:textAlignment="center"
+            />
+
+        <!-- Poens -->
+        <TextView
+            android:id="@+id/poens"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/lbl_poens"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:textColor="@color/workingHours"
+            android:textSize="@dimen/poens"
+            android:text="poens"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+
+
+    </RelativeLayout>
+</LinearLayout>

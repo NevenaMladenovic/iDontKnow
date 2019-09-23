@@ -6,19 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.bumptech.glide.Glide;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.nevena.idontknow.GlideApp;
-import com.nevena.idontknow.MainActivity;
 import com.nevena.idontknow.Models.Place;
 import com.nevena.idontknow.PlaceActivity;
-import com.nevena.idontknow.ProfileActivity;
 import com.nevena.idontknow.R;
 
 import java.util.List;
@@ -58,7 +52,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.MyViewHold
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_row, parent, false);
+                .inflate(R.layout.place_list_row, parent, false);
 
         return new MyViewHolder(itemView);
     }

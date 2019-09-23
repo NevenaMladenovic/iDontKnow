@@ -12,4 +12,7 @@
     <dimen name="workingHours">13dip</dimen>
     <dimen name="address">12dip</dimen>
 
+    <dimen name="poens">20dip</dimen>
+    <dimen name="num">40dip</dimen>
+
 </resources>

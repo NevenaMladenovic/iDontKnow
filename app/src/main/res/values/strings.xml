@@ -67,6 +67,7 @@
     <string name="txt_total_poens">Total poens:</string>
     <string name="hint_poens">Total poens:</string>
     <string name="btn_logout">logout</string>
+    <string name="total_poens">total poens:</string>
 
 
 </resources>
