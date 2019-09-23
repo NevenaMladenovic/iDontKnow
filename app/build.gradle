@@ -23,6 +23,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildToolsVersion = '28.0.3'
 
 }
 
@@ -92,4 +93,6 @@ dependencies {
     implementation 'org.osmdroid:osmdroid-android:6.1.0'
     implementation 'org.osmdroid:osmdroid-wms:6.1.0'
     implementation 'org.osmdroid:osmdroid-mapsforge:6.1.0'
+
+
 }

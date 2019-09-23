@@ -338,8 +338,7 @@ public class LoginActivity extends AppCompatActivity {
                     currentUserID = user.getUserID();
                     if(!currentUserID.isEmpty()) {
 //                        if(isUserLoggedIn) {
-                        if(readSP())
-                        {    writeSp(false);}
+
 
                             startActivity(new Intent(LoginActivity.this, PlacesListActivity.class));
                             finish();

@@ -144,7 +144,7 @@ public class ProfileActivity extends AppCompatActivity
         name.setText(user.getName());
         surname.setText(user.getSurname());
         email.setText(user.getEmail());
-        poens.setText(String.format(user.getPoens()));
+        poens.setText(String.valueOf(user.getPoens()));
     }
 
     private void initLayout()

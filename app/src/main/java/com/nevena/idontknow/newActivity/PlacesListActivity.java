@@ -42,6 +42,7 @@ import com.nevena.idontknow.Fragments.RankFragment;
 import com.nevena.idontknow.LoginActivity;
 import com.nevena.idontknow.MainActivity;
 import com.nevena.idontknow.Models.Place;
+import com.nevena.idontknow.Models.Review;
 import com.nevena.idontknow.ProfileActivity;
 import com.nevena.idontknow.R;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -75,8 +76,9 @@ public class PlacesListActivity extends AppCompatActivity {
     private PlacesAdapter mAdapter;
     private LinearLayoutManager linearLayoutManager;
     private  BottomNavigationView navView;
-  //  MapView map = null;
+
     AVLoadingIndicatorView avi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,8 +86,6 @@ public class PlacesListActivity extends AppCompatActivity {
 
         mContext = PlacesListActivity.this;
         firebaseMethods = new FirebaseMethods(mContext);
-
-
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -99,7 +99,9 @@ public class PlacesListActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
-        new ReadJSONFILE().execute();
+  //      new ReadJSONFILE().execute();
+        getPlacesList();
+
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -113,7 +115,7 @@ public class PlacesListActivity extends AppCompatActivity {
         });
 
 
-        setupFirebaseData();
+        //setupFirebaseData();
 
 //        Dexter.withActivity(this)
 //                .withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -145,58 +147,58 @@ public class PlacesListActivity extends AppCompatActivity {
 //                }).check();
     }
 
-
-    private void setupFirebaseData()
+    public void getPlacesList()
     {
-        Log.d(TAG, "setupFirebaseAuth: setting up firebase auth.");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref = databaseReference.child("places");
 
-        auth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = firebaseDatabase.getReference("places");
-
-        authListener = new FirebaseAuth.AuthStateListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-             //   FirebaseUser user = firebaseAuth.getCurrentUser();
-
-//                if (user != null) {
-//                    //If user is signed in
-//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-
-                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot != null)
+                {
+                    for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                        Place place = singleSnapshot.getValue(Place.class);
+                        if(place!=null)
+                        {
+                            placesList.add(place);
+                        }
+                    }
+                    mAdapter.notifyDataSetChanged();
+                    new CountDownTimer(600,600)
+                    {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Log.d(TAG, "onComplete: Successful signup");
-                         //   firebaseMethods.addNewPlace(name, type, thumbnailUrl, address, workingHours, rate, latitude, longitude);
-                          //  Toast.makeText(mContext, "Successful signup!", Toast.LENGTH_SHORT).show();
+                        public void onTick(long millisUntilFinished)
+                        {
+
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        public void onFinish()
+                        {
+                            avi.hide();
 
                         }
-                    });
-
-                    finish();
-
-//                } else {
-//                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    }.start();
                 }
-            };
-        }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Error occured when reading database", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
     public void onResume(){
         super.onResume();
         navView.getMenu().findItem(R.id.navigation_places).setChecked(true);
     }
-//
-//    public void onPause(){
-//        super.onPause();
-//        if(map != null)
-//            map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
-//    }
-
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -231,43 +233,43 @@ public class PlacesListActivity extends AppCompatActivity {
         }
     };
 
-    private class ReadJSONFILE extends AsyncTask<Void, Void, Void>
-    {
-
-        @Override
-        protected Void doInBackground(Void... voids)
-        {
-            readJSon();
-            return null;
-        }
-
-        @Override
-        protected void onPreExecute()
-        {
-            avi.show();
-        }
-
-        @Override
-        protected void onPostExecute(Void result)
-        {
-
-            new CountDownTimer(1000,1000)
-            {
-                @Override
-                public void onTick(long millisUntilFinished)
-                {
-
-                }
-
-                @Override
-                public void onFinish()
-                {
-                    avi.hide();
-                    recyclerView.setVerticalScrollbarPosition(placesList.size() - 2);
-                }
-            }.start();
-        }
-    }
+//    private class ReadJSONFILE extends AsyncTask<Void, Void, Void>
+//    {
+//
+//        @Override
+//        protected Void doInBackground(Void... voids)
+//        {
+//            readJSon();
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPreExecute()
+//        {
+//            avi.show();
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void result)
+//        {
+//
+//            new CountDownTimer(1000,1000)
+//            {
+//                @Override
+//                public void onTick(long millisUntilFinished)
+//                {
+//
+//                }
+//
+//                @Override
+//                public void onFinish()
+//                {
+//                    avi.hide();
+//                    recyclerView.setVerticalScrollbarPosition(placesList.size() - 2);
+//                }
+//            }.start();
+//        }
+//    }
 
     private Boolean readSP()
     {
@@ -277,50 +279,68 @@ public class PlacesListActivity extends AppCompatActivity {
         return isFirstLogin;
     }
 
-    private void readJSon()
+    private void writeSp(Boolean val)
     {
-        try
-        {
-            JSONArray response = new JSONArray(loadJSONFromAsset());
-            for (int i = 0; i < response.length(); i++) {
-
-
-                JSONObject obj = response.getJSONObject(i);
-                Place place = new Place();
-                place.setName(obj.getString("name"));
-                place.setThumbnailUrl(obj.getString("image"));
-                place.setRate(((Number) obj.get("rate"))
-                        .doubleValue());
-                place.setWorkingHours(obj.getString("workingHours"));
-                place.setAddress(obj.getString("address"));
-
-                // adding place to places array
-                placesList.add(place);
-
-                 if(readSP())
-                {
-                    firebaseMethods.addNewPlace(place);
-                }
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "FirstLogin", MODE_PRIVATE);
+        SharedPreferences.Editor editorA = sharedPreferencesA.edit();
+        editorA.putBoolean("IsFirstLogin", val); //key, value
+        editorA.apply();
     }
 
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = getAssets().open("places.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
+//    private void readJSon()
+//    {
+//        try
+//        {
+//            JSONArray response = new JSONArray(loadJSONFromAsset());
+//            for (int i = 0; i < response.length(); i++) {
+//
+//
+//                JSONObject obj = response.getJSONObject(i);
+//                Place place = new Place();
+//                place.setName(obj.getString("name"));
+//                place.setType(obj.getString("type"));
+//                place.setThumbnailUrl(obj.getString("image"));
+//                place.setRate(((Number) obj.get("rate"))
+//                        .doubleValue());
+//                place.setWorkingHours(obj.getString("workingHours"));
+//                place.setAddress(obj.getString("address"));
+//                place.setLatitude(obj.getDouble("latitude"));
+//                place.setLongitude(obj.getDouble("longitude"));
+//
+//                // adding place to places array
+//                placesList.add(place);
+//
+//                 if(readSP())
+//                {
+//                    firebaseMethods.addNewPlace(place);
+//                }
+//
+//            }
+//
+//            if(readSP())
+//            {
+//                writeSp(false);
+//            }
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+//    public String loadJSONFromAsset() {
+//        String json = null;
+//        try {
+//            InputStream is = getAssets().open("places.json");
+//            int size = is.available();
+//            byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            json = new String(buffer, "UTF-8");
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//            return null;
+//        }
+//        return json;
+//    }
 }

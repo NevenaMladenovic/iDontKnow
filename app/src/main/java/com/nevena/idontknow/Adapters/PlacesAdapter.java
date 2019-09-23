@@ -70,9 +70,11 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.MyViewHold
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                context.startActivity(new Intent(context, PlaceActivity.class));
-
+            public void onClick(View view)
+            {
+                Intent i = new Intent(context, PlaceActivity.class);
+                i.putExtra("name", place.getName());
+                context.startActivity(i);
             }
         });
 

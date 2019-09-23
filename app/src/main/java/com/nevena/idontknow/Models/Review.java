@@ -16,6 +16,13 @@ public class Review
         this.userID = userID;
     }
 
+    public Review(Review review)
+    {
+        this.comment = review.comment;
+        this.rate = review.rate;
+        this.userID = review.userID;
+    }
+
     public String getComment() {
         return comment;
     }

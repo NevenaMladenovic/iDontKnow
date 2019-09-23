@@ -55,6 +55,8 @@ public class Place
         this.address = place.address;
         this.workingHours = place.workingHours;
         this.rate = place.rate;
+        this.latitude = place.latitude;
+        this.longitude = place.longitude;
     }
 
     public Place(double latitude, double longitude) {

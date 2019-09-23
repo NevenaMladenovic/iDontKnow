@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nevena.idontknow.Models.Place;
+import com.nevena.idontknow.Models.Review;
 import com.nevena.idontknow.Models.User;
 
 
@@ -110,6 +111,16 @@ public class FirebaseMethods {
         myRef.child("places")
                 .child(place.getName())
                 .setValue(place);
+    }
+
+    public void addNewReview(String place, Review r)
+    {
+        Review review = new Review(r);
+        myRef.child("places")
+                .child(place)
+                .child("review")
+                .child(review.getUserID())
+                .setValue(review);
     }
 
 }
