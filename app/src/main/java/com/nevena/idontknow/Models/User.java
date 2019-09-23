@@ -6,6 +6,10 @@ public class User
     private String email, userID;
     private int poens;
 
+    private double latitude;
+    private double longitude;
+
+
     //private int rang;
 
     public User()
@@ -17,7 +21,7 @@ public class User
 //        this.poens=0;
     }
 
-    public User(String name, String surname, String nickname, String email, String userID)
+    public User(String name, String surname, String nickname, String email, String userID, double latitude, double longitude)
     {
         this.name = name;
         this.surname=surname;
@@ -25,6 +29,8 @@ public class User
         this.email = email;
         this.userID = userID;
         this.poens = 0;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public User(User u)
@@ -34,6 +40,8 @@ public class User
         this.nickname= u.getNickname();
         this.email = u.getEmail();
         this.poens = u.getPoens();
+        this.latitude = u.getLatitude();
+        this.longitude = u.getLongitude();
 
     }
 
@@ -55,4 +63,19 @@ public class User
     public int getPoens() { return poens; }
     public void setPoens(int poens) { this.poens = poens;}
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 }

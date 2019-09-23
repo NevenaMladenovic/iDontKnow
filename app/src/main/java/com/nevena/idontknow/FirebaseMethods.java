@@ -83,7 +83,7 @@ public class FirebaseMethods {
 
     public void addNewUser (String name, String surname, String nickname,String email) {
 
-        User user = new User(name, surname, nickname, email, userID);
+        User user = new User(name, surname, nickname, email, userID, 0d, 0d);
 
         myRef.child("users")
                 .child(userID)

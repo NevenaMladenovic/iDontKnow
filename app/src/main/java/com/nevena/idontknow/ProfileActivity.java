@@ -65,6 +65,10 @@ public class ProfileActivity extends AppCompatActivity
 
     ImageView imgPlus;
 
+
+    private double latitude;
+    private double longitude;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -145,7 +149,8 @@ public class ProfileActivity extends AppCompatActivity
         surname.setText(user.getSurname());
         email.setText(user.getEmail());
         poens.setText(String.valueOf(user.getPoens()));
-
+        latitude = user.getLatitude();
+        longitude = user.getLongitude();
     }
 
     private void initLayout()
@@ -206,7 +211,7 @@ public class ProfileActivity extends AppCompatActivity
                             .setValue(newEmail);
                 }
 
-                newUser = new User(newName, newNickname, newNickname, newEmail, userID);
+                newUser = new User(newName, newNickname, newNickname, newEmail, userID, latitude, longitude);
 
 
                 finish();
