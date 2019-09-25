@@ -1,6 +1,6 @@
 package com.nevena.idontknow.Models;
 
-public class User
+public class User implements Comparable<User>
 {
     private String name, surname, nickname;
     private String email, userID;
@@ -45,6 +45,17 @@ public class User
 
     }
 
+    @Override
+    public int compareTo(User u) {
+        int comparePoens =u.getPoens();
+        /* For Ascending order*/
+       // return this.poens-comparePoens;
+
+        /* For Descending order */
+        return comparePoens-this.poens;
+    }
+
+
     public String getUserID() { return userID; }
     public void setUserID(String userID) { this.userID = userID;}
 
@@ -78,4 +89,6 @@ public class User
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+
 }

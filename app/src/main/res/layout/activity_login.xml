@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="@string/hint_nickname2"
+                android:hint="@string/hint_email"
                 android:textAlignment="center"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -66,20 +66,20 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/login_password"
-            android:layout_marginTop="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_55sdp"
             android:text="@string/btn_login"/>
 
-        <Button
-            android:id="@+id/login_btn_forgotPassword"
-            android:layout_width="@dimen/_250sdp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_btn_login"
-            android:text="@string/btn_forgotPassword"
-            android:background="@null"
-            android:textAllCaps="false"
-            android:layout_marginTop="@dimen/_5sdp" />
+<!--        <Button-->
+<!--            android:id="@+id/login_btn_forgotPassword"-->
+<!--            android:layout_width="@dimen/_250sdp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/login_btn_login"-->
+<!--            android:text="@string/btn_forgotPassword"-->
+<!--            android:background="@null"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:layout_marginTop="@dimen/_5sdp" />-->
 
         <Button
             android:id="@+id/login_btn_register"
@@ -87,20 +87,20 @@
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_btn_forgotPassword"
+            app:layout_constraintTop_toBottomOf="@id/login_btn_login"
             android:layout_marginTop="@dimen/_5sdp"
             android:text="@string/linkbtn_register"
             android:background="@null"
             android:textAllCaps="false"/>
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/login_btn_login_google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login_btn_register"
-            android:layout_marginTop="@dimen/_5sdp" />
+<!--        <com.google.android.gms.common.SignInButton-->
+<!--            android:id="@+id/login_btn_login_google"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/login_btn_register"-->
+<!--            android:layout_marginTop="@dimen/_5sdp" />-->
 
     </android.support.constraint.ConstraintLayout>
 

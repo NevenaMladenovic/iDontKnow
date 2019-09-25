@@ -1,29 +1,42 @@
 package com.nevena.idontknow.newActivity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.Key;
+import com.bumptech.glide.signature.ObjectKey;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.nevena.idontknow.Adapters.PlacesAdapter;
+import com.nevena.idontknow.Controllers.Constants;
 import com.nevena.idontknow.FirebaseMethods;
+import com.nevena.idontknow.GlideApp;
 import com.nevena.idontknow.Models.Place;
 import com.nevena.idontknow.ProfileActivity;
 import com.nevena.idontknow.R;
@@ -31,6 +44,10 @@ import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PlacesListActivity extends AppCompatActivity {
 
@@ -49,16 +66,20 @@ public class PlacesListActivity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private  BottomNavigationView navView;
 
+    @BindView(R.id.profile_img)
+    ImageView imgProfile;
+
     AVLoadingIndicatorView avi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_places_list);
+
         reloadPlaces = true;
         mContext = PlacesListActivity.this;
         firebaseMethods = new FirebaseMethods(mContext);
-
+        ButterKnife.bind(this);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         avi =  findViewById(R.id.indicator);
@@ -77,18 +98,33 @@ public class PlacesListActivity extends AppCompatActivity {
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-
-        ImageView profile = (ImageView) findViewById(R.id.profile_img);
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(PlacesListActivity.this, ProfileActivity.class));
-            }
-        });
-
-
         //setupFirebaseData();
 
+
+    }
+    @OnClick({R.id.profile_img})
+    void onProfileImageClick()
+    {
+        startActivity(new Intent(PlacesListActivity.this, ProfileActivity.class));
+    }
+    private String readSP()
+    {
+        SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "Images", MODE_PRIVATE);
+        return sharedPreferencesA.getString("ImagePath2", "");
+    }
+    private void loadProfile(String url) {
+        Log.d(TAG, "Image cache path: " + url);
+        Key glideKey = new ObjectKey(new Object());
+        GlideApp.with(this).load(url)
+                .signature(glideKey)
+                .into(imgProfile);
+        imgProfile.setColorFilter(ContextCompat.getColor(this, android.R.color.transparent));
+    }
+
+    private void loadProfileDefault() {
+        GlideApp.with(this).load(R.drawable.ic_avatar)
+                .into(imgProfile);
+        imgProfile.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
     }
 
     public void getPlacesList()
@@ -109,21 +145,7 @@ public class PlacesListActivity extends AppCompatActivity {
                         }
                     }
                     mAdapter.notifyDataSetChanged();
-                    new CountDownTimer(600,600)
-                    {
-                        @Override
-                        public void onTick(long millisUntilFinished)
-                        {
-
-                        }
-
-                        @Override
-                        public void onFinish()
-                        {
-                            avi.hide();
-
-                        }
-                    }.start();
+                    avi.hide();
                 }
                 else
                 {
@@ -142,6 +164,14 @@ public class PlacesListActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         navView.getMenu().findItem(R.id.navigation_places).setChecked(true);
+        if (!readSP().equalsIgnoreCase(""))
+        {
+            loadProfile(readSP());
+        }
+        else
+        {
+            loadProfileDefault();
+        }
     }
 
 
@@ -176,6 +206,33 @@ public class PlacesListActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            if(Constants.mapsActivity != null)
+                Constants.mapsActivity.finish();
+            if(Constants.rankActivity != null)
+                Constants.rankActivity.finish();
+            if(Constants.friendsActivity != null)
+                Constants.friendsActivity.finish();
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please touch BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 
 //    private class ReadJSONFILE extends AsyncTask<Void, Void, Void>
 //    {
@@ -214,23 +271,21 @@ public class PlacesListActivity extends AppCompatActivity {
 //            }.start();
 //        }
 //    }
-
-    private Boolean readSP()
-    {
-        SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "FirstLogin", MODE_PRIVATE);
-        Boolean isFirstLogin = sharedPreferencesA.getBoolean("IsFirstLogin", true);
-
-        return isFirstLogin;
-    }
-
-    private void writeSp(Boolean val)
-    {
-        SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "FirstLogin", MODE_PRIVATE);
-        SharedPreferences.Editor editorA = sharedPreferencesA.edit();
-        editorA.putBoolean("IsFirstLogin", val); //key, value
-        editorA.apply();
-    }
-
+//    private Boolean readSP()
+//    {
+//        SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "FirstLogin", MODE_PRIVATE);
+//        Boolean isFirstLogin = sharedPreferencesA.getBoolean("IsFirstLogin", true);
+//
+//        return isFirstLogin;
+//    }
+//
+//    private void writeSp(Boolean val)
+//    {
+//        SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "FirstLogin", MODE_PRIVATE);
+//        SharedPreferences.Editor editorA = sharedPreferencesA.edit();
+//        editorA.putBoolean("IsFirstLogin", val); //key, value
+//        editorA.apply();
+//    }
 //    private void readJSon()
 //    {
 //        try

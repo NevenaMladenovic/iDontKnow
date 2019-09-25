@@ -1,5 +1,6 @@
 package com.nevena.idontknow.Models;
 
+
 public class Place
 {
 

@@ -26,6 +26,10 @@
 
     <!-- activity_profile -->
     <string name="btn_save">Save changes</string>
+    <string name="btn_back">Back</string>
+    <string name="find_text">Find</string>
+    <string name="reset_text">Reset filter</string>
+    <string name="cancel_text">Cancel</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -57,7 +61,8 @@
     <string name="title_friends">Friends</string>
     <string name="title_rank">Rank</string>
 
-
+    <string name="find_title">Pick place type</string>
+    <string name="place_review_info">Places within 100m are valid for review.\nPlease pick one!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="btn_review">Write a review</string>
     <string name="txt_review">Write a review</string>
@@ -68,6 +73,16 @@
     <string name="hint_poens">Total poens:</string>
     <string name="btn_logout">logout</string>
     <string name="total_poens">total poens:</string>
+    <string name="under_construction">Under construction...</string>
 
+    <string-array name="places_type">
+        <item>-select-</item>
+        <item>pivnica</item>
+        <item>kafe-poslastičara</item>
+        <item>gastro bar</item>
+    </string-array>
 
+    <string name="distance_title">Set diameter</string>
+
+    <string name="under_work_text">Under Work</string>
 </resources>

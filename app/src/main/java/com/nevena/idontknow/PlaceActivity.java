@@ -6,6 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,9 +28,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.nevena.idontknow.Adapters.ReviewsAdapter;
 import com.nevena.idontknow.Models.Place;
 import com.nevena.idontknow.Models.Review;
 import com.nevena.idontknow.Models.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceActivity extends AppCompatActivity
 {
@@ -37,7 +44,15 @@ public class PlaceActivity extends AppCompatActivity
     private TextView name, rate, workingHours, address;
 
     int inputRate;
-    String inputComment, userID, placeID;
+    public String inputComment, userID, placeID;
+
+    private Context mContext;
+
+    private RecyclerView recyclerView;
+    public static List<Review> reviewsList;
+    public static List<User> usersList;
+    public ReviewsAdapter mAdapter;
+    private LinearLayoutManager linearLayoutManager;
 
     private FirebaseMethods firebaseMethods;
     private FirebaseAuth auth;
@@ -51,21 +66,119 @@ public class PlaceActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
 
+        mContext = PlaceActivity.this;
+        firebaseMethods = new FirebaseMethods(mContext);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef = firebaseDatabase.getReference();
-        firebaseMethods = new FirebaseMethods(this);
+       // firebaseMethods = new FirebaseMethods(this);
 
         FirebaseUser user = auth.getCurrentUser();
         userID = user.getUid();
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        reviewsList = new ArrayList<>();
+        usersList = new ArrayList<>();
+        mAdapter = new ReviewsAdapter(this, reviewsList, usersList, userID);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(mAdapter);
+
+
+        initLayout();
 
         //what place is selected
         Intent i = getIntent();
         placeID = i.getStringExtra("name");
+        boolean reviewValid = i.getBooleanExtra("reviewValid", false);
+        if(writeReview != null && reviewValid)
+        {
+            writeReview.setVisibility(View.VISIBLE);
+            initListeners();
+        }
 
-        initLayout();
-        initListeners();
         findPlace(placeID);
+
+
+
+
+    }
+
+
+    public void getReviewsList()
+    {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref = databaseReference.child("places").child(placeID).child("review");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot != null)
+                {
+                    reviewsList = new ArrayList<>();
+                    for (DataSnapshot singleSnapshot : dataSnapshot.getChildren()) {
+                        Review review = singleSnapshot.getValue(Review.class);
+                        if(review!=null)
+                        {
+                            reviewsList.add(review);
+                        }
+                    }
+                    if(reviewsList != null && reviewsList.size() > 0)
+                        getUsersList();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Error occured when reading database", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getUsersList()
+    {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
+                    if(dataSnapshot != null)
+                    {
+                        usersList = new ArrayList<>();
+                        for (DataSnapshot singleSnapshot : dataSnapshot.getChildren())
+                        { User user = singleSnapshot.getValue(User.class);
+                            if(user!=null)
+                            {
+                                for (int i=0; i < reviewsList.size(); i++)
+                                {
+                                    if(user.getUserID().equalsIgnoreCase(reviewsList.get(i).getUserID()))
+                                    {
+                                        usersList.add(user);
+                                    }
+                                }
+                            }
+                        }
+                        if(usersList != null && usersList.size() > 0)
+                            mAdapter.setLists(reviewsList, usersList);
+
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(),"Error occured when reading database", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
 
     }
 
@@ -204,6 +317,7 @@ public class PlaceActivity extends AppCompatActivity
                 .child(userID)
                 .child("poens")
                 .setValue(poens);
+        findPlace(placeID);
     }
 
     public void updateRate(int inputRate)
@@ -254,6 +368,8 @@ public class PlaceActivity extends AppCompatActivity
             {
                     Place place = dataSnapshot.getValue(Place.class);
                     setPlaceData(place);
+                    getReviewsList();
+
             }
 
             @Override

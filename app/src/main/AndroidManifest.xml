@@ -19,37 +19,42 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".newActivity.RankActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
-        <activity android:name=".newActivity.FriendsActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+
+        <activity android:name=".FriendsProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".newActivity.RankActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".newActivity.FriendsActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".newActivity.MapsActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".newActivity.PlacesListActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".PlaceActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ImagePickerActivity"
             android:label="@string/title_activity_image_picker"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+            />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+            />
         <activity
             android:name=".ProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".RegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar.Fullscreen">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

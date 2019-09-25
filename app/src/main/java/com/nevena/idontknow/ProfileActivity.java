@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -304,10 +305,10 @@ public class ProfileActivity extends AppCompatActivity
                 try {
                     Uri uri = data.getParcelableExtra("path");
                     // You can update this bitmap to your server
-                    //Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                    //saveToInternalStorage(bitmap);
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                    String imgPath = saveToInternalStorage(bitmap);
                     // loading profile image from local cache
-                    writeSp(uri.toString());
+                    writeSp(uri.toString(), imgPath);
                     loadProfile(uri.toString());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -342,7 +343,7 @@ public class ProfileActivity extends AppCompatActivity
         startActivityForResult(intent, 101);
     }
 
-    private void saveToInternalStorage(Bitmap bitmapImage){
+    private String saveToInternalStorage(Bitmap bitmapImage){
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         // path to /data/data/yourapp/app_data/imageDir
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
@@ -354,6 +355,7 @@ public class ProfileActivity extends AppCompatActivity
             fos = new FileOutputStream(mypath);
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            return mypath.getAbsolutePath();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -363,23 +365,23 @@ public class ProfileActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }
-        writeSp(directory.getAbsolutePath());
+//        writeSp(directory.getAbsolutePath());
         // return directory.getAbsolutePath();
+        return "";
     }
 
     private String readSP()
     {
         SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "Images", MODE_PRIVATE);
-        String imagePath = sharedPreferencesA.getString("ImagePath", "");
-
-        return imagePath;
+        return sharedPreferencesA.getString("ImagePath", "");
     }
 
-    private void writeSp(String path)
+    private void writeSp(String path, String path2)
     {
         SharedPreferences sharedPreferencesA = getSharedPreferences(getPackageName() + "Images", MODE_PRIVATE);
         SharedPreferences.Editor editorA = sharedPreferencesA.edit();
         editorA.putString("ImagePath", path); //key, value
+        editorA.putString("ImagePath2", path2);
         editorA.apply();
     }
 }

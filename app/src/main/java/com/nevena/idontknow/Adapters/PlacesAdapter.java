@@ -2,14 +2,22 @@ package com.nevena.idontknow.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.load.Key;
+import com.bumptech.glide.signature.ObjectKey;
 import com.nevena.idontknow.GlideApp;
 import com.nevena.idontknow.Models.Place;
 import com.nevena.idontknow.PlaceActivity;
@@ -21,6 +29,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.MyViewHold
 {
     private Context context;
     private List<Place> placesList;
+    private ImageLoader mImageLoader;
 
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
@@ -46,6 +55,17 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.MyViewHold
     {
         this.context = context;
         this.placesList = placesList;
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(context);
+        mImageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
+            private final LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(10);
+            public void putBitmap(String url, Bitmap bitmap) {
+                mCache.put(url, bitmap);
+            }
+            public Bitmap getBitmap(String url) {
+                return mCache.get(url);
+            }
+        });
     }
 
     @Override
@@ -72,27 +92,13 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.MyViewHold
             {
                 Intent i = new Intent(context, PlaceActivity.class);
                 i.putExtra("name", place.getName());
+                i.putExtra("reviewValid", false);
                 context.startActivity(i);
             }
         });
 
-        //TODO slike se ne ucitavaju
+        holder.thumbnail.setImageUrl(place.getThumbnailUrl(),mImageLoader);
 
-        GlideApp.with(context)
-                .load(place.getThumbnailUrl())
-                .placeholder(R.drawable.logo)
-        //        .dontAnimate()
-                .thumbnail(0.25f)
-                .into(holder.thumbnail);
-
-        // Reference to an image file in Cloud Storage
-      //  StorageReference storageReference = FirebaseStorage.getInstance().getReference("logos");
-
-        // Download directly from StorageReference using Glide
-        // (See MyAppGlideModule for Loader registration)
-//        Glide.with(context)
-//                .load(storageReference)
-//                .into(holder.thumbnail);
     }
 
     @Override

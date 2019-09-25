@@ -4,6 +4,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#00574B</color>
+
+    <color name="cancel_color">#0000574B</color>
+    <color name="restore_color">#00574B</color>
     <!--<color name="colorAccent">#D81B60</color>-->
     <color name="profile_default_tint">#e0e0e0</color>
 

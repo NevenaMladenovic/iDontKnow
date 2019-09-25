@@ -13,6 +13,6 @@
     <dimen name="address">12dip</dimen>
 
     <dimen name="poens">20dip</dimen>
-    <dimen name="num">40dip</dimen>
+    <dimen name="num">30dip</dimen>
 
 </resources>

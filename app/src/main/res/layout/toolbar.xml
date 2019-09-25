@@ -5,11 +5,10 @@
     android:layout_height="@dimen/_60sdp"
     android:background="@color/colorPrimary">
 
-    <ImageView
-        android:id="@+id/profile_img"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_img2"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_50sdp"
-        app:srcCompat="@drawable/ic_avatar"
-        android:clickable="true" />
+        android:src="@drawable/ic_avatar"/>
 
 </android.support.v7.widget.Toolbar>

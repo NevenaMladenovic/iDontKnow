@@ -10,7 +10,7 @@
 
 
     <RelativeLayout
-        android:id="@+id/profile_img"
+        android:id="@+id/profile_imgHolder"
         android:layout_width="@dimen/_140sdp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_img"
+        app:layout_constraintTop_toBottomOf="@id/profile_imgHolder"
         android:layout_marginTop="@dimen/_20sdp">
         <EditText
             android:id="@+id/profile_etxt_nickname"
@@ -72,7 +72,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_img"
+        app:layout_constraintTop_toBottomOf="@id/profile_imgHolder"
         android:layout_margin="@dimen/_3sdp"
         android:hint="@string/hint_name"
         android:inputType="text"
@@ -150,7 +150,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_poens"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/btn_save"/>
 
     <Button
@@ -160,7 +160,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_btn_save"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:text="@string/btn_logout"
         android:background="@color/colorAccent"/>
 

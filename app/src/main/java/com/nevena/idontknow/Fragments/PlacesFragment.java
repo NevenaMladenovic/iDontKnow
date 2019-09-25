@@ -187,7 +187,7 @@ public class PlacesFragment extends Fragment
                 @Override
                 public void onFinish()
                 {
-                    avi.hide();
+
                     recyclerView.setVerticalScrollbarPosition(placesList.size() - 2);
                 }
             }.start();

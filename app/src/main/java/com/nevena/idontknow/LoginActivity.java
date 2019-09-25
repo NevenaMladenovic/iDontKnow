@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin, btnRegister;
     private ImageView img;
 
-    SignInButton btnLoginGoogle;
+    //SignInButton btnLoginGoogle;
     private final static int RC_SIGN_IN = 123;
     GoogleSignInClient mGoogleSignInClient;
 
@@ -171,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btnRegister = (Button) findViewById(R.id.login_btn_register);
         btnLogin = (Button) findViewById(R.id.login_btn_login);
-        btnLoginGoogle = (SignInButton) findViewById(R.id.login_btn_login_google);
+        //btnLoginGoogle = (SignInButton) findViewById(R.id.login_btn_login_google);
 
         loadingHolder =  findViewById(R.id.loadingHolder);
         avi =  findViewById(R.id.indicator);
@@ -179,13 +179,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initListeners()
     {
-        btnLoginGoogle.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+//        btnLoginGoogle.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v) {
+//                login();
+//            }
+//        });
 
         btnRegister.setOnClickListener(new View.OnClickListener()
         {
@@ -420,29 +420,29 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void login()
-    {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
+//    private void login()
+//    {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-                // ...
-            }
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+//        if (requestCode == RC_SIGN_IN) {
+//            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//            try {
+//                // Google Sign In was successful, authenticate with Firebase
+//                GoogleSignInAccount account = task.getResult(ApiException.class);
+//                firebaseAuthWithGoogle(account);
+//            } catch (ApiException e) {
+//                // Google Sign In failed, update UI appropriately
+//                Log.w(TAG, "Google sign in failed", e);
+//                // ...
+//            }
+//        }
+//    }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account)
     {
