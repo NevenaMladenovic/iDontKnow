@@ -1,6 +1,8 @@
 # iDontKnow
 Application for finding nearby places to eat or get a drink
 
+It's made with Java, FireBase and OpenMaps.
+
 
 <<< Loading screen >>>
 
