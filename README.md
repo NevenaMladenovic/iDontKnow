@@ -3,6 +3,12 @@ Application for finding nearby places to eat or get a drink
 
 It's made with Java, FireBase and OpenStreetMaps.
 
+Places are shown in two different ways - as list of places and on the map. 
+Using a filter, user can search places within selected radius and/or by place type.
+If user is within 100m of place, he can submit a review.
+By submitting reviews, he is collecting a points, according to which a ranking list is formed.
+
+
 
 <<< Loading screen >>>
 
